@@ -29,7 +29,7 @@
          </div>
     </div>
  <div class="container p-5">
-    <form name="formCliente">
+    <form name="formCliente" method="post">
         <div class="mb-3">
          <%
              List<Cliente> lista = (List<Cliente>)request.getAttribute("lista");
@@ -53,7 +53,7 @@
                       out.print("<td>" + c.getCPF() + "</td>");
                       out.print("<td>" + c.getCelular() + "</td>");
                       out.print("<td>" + c.getEmail() + "</td>");
-                      out.print("<td>" + "<a type='button' class='btn btn-warning' href='editar?i="+i+"&cpf="+c.getCPF()+"'> Editar </a>" + "  " + "<a type='button' class='btn btn-danger' href='excluir?i="+i+"&cpf="+c.getCPF()+"'> Excluir </a>"+ "</td>");
+                      out.print("<td>" + "<a type='button' class='btn btn-warning' href='editar?nome="+c.getNome()+"'> Editar </a>" + "  " + "<a type='button' class='btn btn-danger' href='excluir?i="+i+"&cpf="+c.getCPF()+"'> Excluir </a>"+ "</td>");
                    out.print("</tr>");
               i++;
               };

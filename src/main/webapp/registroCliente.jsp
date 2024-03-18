@@ -27,7 +27,7 @@
              }
         }
         %>
-        <form action="insert" name="formCliente">
+        <form action="insert" method="post" name="formCliente">
         <%
             out.print("<div class='mb-3'>");
                 out.print("<div class='col-xs-2'>");

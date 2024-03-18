@@ -31,25 +31,29 @@ public class RegistroClienteServlet extends HttpServlet {
         String action = request.getServletPath();
         if(action.equals("/clienteServlet")){
             clientes(request,response);
+        }else if (action.equals("/editar")) {
+            editarCliente(request, response);
         }else if(action.equals("/create")){
             response.sendRedirect("registroCliente.jsp");
-        }else if (action.equals("/insert")) {
+        }else if (action.equals("/busca")) {
+            buscaCliente(request, response);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getServletPath();
+        if (action.equals("/insert")) {
             novoCliente(request, response);
         }else if (action.equals("/excluir")) {
             excluirCliente(request, response);
-        }else if (action.equals("/editar")) {
-           editarCliente(request, response);
         }else if (action.equals("/salvar")) {
             salvarCliente(request, response);
-        }else if (action.equals("/busca")) {
-            buscaCliente(request, response);
         }
     }
 
     //Listar Clientes
     protected void clientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             RequestDispatcher dispatcher = request.getRequestDispatcher("lista.jsp");
-            dicionario.imprimiVetor();
             request.setAttribute("lista",dicionario.getDict());
             dispatcher.forward(request,response);
     }
@@ -91,8 +95,6 @@ public class RegistroClienteServlet extends HttpServlet {
         request.setAttribute("mensagem",mensagem);
         dispatcher.forward(request,response);
 
-        /*response.sendRedirect(page);*/
-
 
     }
 
@@ -111,14 +113,20 @@ public class RegistroClienteServlet extends HttpServlet {
 
     //Editar Cliente
     protected void editarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int i = (Integer.parseInt(request.getParameter("i")));
-        String cpf = request.getParameter("cpf");
-        Cliente cliente = dicionario.buscaCliente(cpf);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("pages/editarCliente.jsp");
-        request.setAttribute("cliente",cliente);
-        request.setAttribute("indice",i);
-        dispatcher.forward(request,response);
+        String nome = request.getParameter("nome");
+        String pages ="";
+        if(nome != null && nome!= ""){
+            Cliente cliente = dicionario.buscarPeloNome(nome);
+            pages="pages/editarCliente.jsp";
+            request.setAttribute("cliente",cliente);
 
+        }else{
+            pages="lista.jsp";
+            request.setAttribute("lista",dicionario.getDict());
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("pages/editarCliente.jsp");
+        dispatcher.forward(request,response);
     }
 
     //Atualizando cliente na lista
@@ -130,15 +138,11 @@ public class RegistroClienteServlet extends HttpServlet {
         if (cpf != null && cpf != "") {
             Cliente c = dicionario.buscaCliente(cpf);
 
-            if(c==null){
-                Cliente c2 = dicionario.buscarPeloNome(nome);
-
-                if(c2 != null){
-                    c2.setNome(request.getParameter("nome"));
-                    c2.setCPF(request.getParameter("cpf"));
-                    c2.setCelular(request.getParameter("celular"));
-                    c2.setEmail(request.getParameter("email"));
-                }
+            if(c!=null){
+                c.setNome(request.getParameter("nome"));
+                c.setCPF(request.getParameter("cpf"));
+                c.setCelular(request.getParameter("celular"));
+                c.setEmail(request.getParameter("email"));
             }
         }
 

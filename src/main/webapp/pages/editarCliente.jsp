@@ -18,17 +18,17 @@
         <div class="col"><a type="button" class="btn btn-info" href="index.html">Voltar ao Menu </a></div>
      </div>
     <div class="mb-3 mt-5">
-        <form action="salvar" name="formCliente">
+        <form action="salvar" method="post" name="formCliente">
         <%
         Cliente c=(Cliente)request.getAttribute("cliente");
-        int indice=(int)request.getAttribute("indice");
+
             out.print("<div class='mb-3'>");
                 out.print("<div class='col-xs-2'>");
                     out.print("Nome: <input type='text' class='form-control' name='nome' value='" +c.getNome()+ "'>");
                     out.print("CPF: <input type='text' class='form-control' name='cpf' value='" +c.getCPF()+ "'>");
                     out.print("Celular: <input type='text' class='form-control' name='celular' value='" +c.getCelular()+ "'>");
                     out.print("Email: <input type='text' class='form-control' name='email' value='" +c.getEmail()+ "'>");
-                    out.print("<input type='hidden' name='indice' value='" +indice+ "'>");
+
                 out.print("</div>");
             out.print("</div>");
         %>

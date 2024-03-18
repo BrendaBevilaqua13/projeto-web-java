@@ -18,7 +18,7 @@ public class Validacao {
 
     public String validacaoNome(String nome){
         String mensagem = "";
-        if(!nome.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*$")) {
+        if(!nome.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\s]+$")) {
             mensagem ="Nome não pode conter números";
         }
 
@@ -40,7 +40,7 @@ public class Validacao {
         if(!celular.matches("^[0-9]*$")) {
             mensagem ="Preencha o campo celular apenas com números";
         }
-        if(celular.length() <11 || celular.length() >11){
+        if(celular.length() <9 || celular.length() >10){
             return mensagem = "Número de celular inválido";
         }
 
